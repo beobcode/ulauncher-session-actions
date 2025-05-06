@@ -16,6 +16,12 @@
         "default_value": "exit"
     },
     {
+        "id": "lockscreen_command",
+        "type": "input",
+        "name": "Command to run to execute lockscreen action",
+        "default_value": "cinnamon-screensaver-command --lock"
+    }, 
+   {
         "id": "logout_command",
         "type": "input",
         "name": "Command to run to execute logout action",
@@ -47,4 +53,3 @@
     }
   ]
 }
-

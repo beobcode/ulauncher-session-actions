@@ -14,6 +14,7 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         items = []
         options = [
+            'lockscreen',    
             'logout',
             'restart',
             'reboot',
@@ -23,6 +24,7 @@ class KeywordQueryEventListener(EventListener):
             'sleep',
             'hibernate'
         ]
+        lockscreen_command =extension.preferences['lockscreen_command']        
         reboot_command = extension.preferences['reboot_command']
         shutdown_command = extension.preferences['shutdown_command']
         logout_command = extension.preferences['logout_command']
@@ -30,6 +32,14 @@ class KeywordQueryEventListener(EventListener):
         hibernate_command = extension.preferences['hibernate_command']
         myList = event.query.split(" ")
         if len(myList) == 1:
+            items.append(
+                ExtensionResultItem(
+                    icon='images/lockscreen.png',
+                    name='Lock screen',
+                    description='Lock the screen',
+                    on_enter=RunScriptAction(lockscreen_command, None)
+                ) 
+            )           
             items.append(
                 ExtensionResultItem(
                     icon='images/reboot.png',
@@ -77,7 +87,7 @@ class KeywordQueryEventListener(EventListener):
             included = []
             for option in options:
                 if myQuery in option:
-                    if option in ['shutdown', 'halt'] and 'shutdown' not in included:
+                    if option in ['shutdown', 'halt'] and 'shutdown' not in included:                        
                         items.append(
                             ExtensionResultItem(
                                 icon='images/shutdown.png',
@@ -123,6 +133,15 @@ class KeywordQueryEventListener(EventListener):
                                 name='Hibernate',
                                 description='Suspend to disk',
                                 on_enter=RunScriptAction(hibernate_command, None)
+                            )
+                        )
+                    elif option in ['lockscreen']:
+                        items.append(
+                            ExtensionResultItem(
+                                icon='images/lockscreen.png',
+                                name='Lock screen',
+                                description='Lock the screen',
+                                on_enter=RunScriptAction(lockscreen_command, None)
                             )
                         )
 
